@@ -24,14 +24,16 @@ app.use(bodyParser.json());
 app.use(
   cors({
     origin: [
-      "https://smart-brain-fe.vercel.app", // production
-      "https://smart-brain-fe-git-main-shivams-projects-404d3972.vercel.app", // preview deployment
-      "http://localhost:3000", // local testing
+      "https://smart-brain-fe.vercel.app",
+      "https://smart-brain-fe-git-main-shivams-projects-404d3972.vercel.app",
+      "http://localhost:3000",
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
+app.options("*", cors());
 
 const database = {
   users: [
