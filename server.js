@@ -16,6 +16,14 @@ const db = knex({
     database: process.env.DB_NAME,
   },
 });
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 
 // To avoid CORS
 
@@ -23,11 +31,16 @@ const app = express();
 app.use(bodyParser.json());
 app.use(
   cors({
-    origin: "https://smart-brain-fe.vercel.app", // Replace with your actual frontend URL
-    methods: "GET,POST,PUT,DELETE",
+    origin: [
+      "https://smart-brain-fe.vercel.app", // production
+      "https://smart-brain-fe-git-main-shivams-projects-404d3972.vercel.app", // preview deployment
+      "http://localhost:3000", // local testing
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
+
 const database = {
   users: [
     {
